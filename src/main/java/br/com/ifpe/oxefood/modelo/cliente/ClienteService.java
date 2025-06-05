@@ -36,7 +36,7 @@ public class ClienteService {
     }
 
     @Transactional
-   public void update(Long id, Cliente clienteAlterado) {
+    public void update(Long id, Cliente clienteAlterado) {
 
       Cliente cliente = repository.findById(id).get();
       cliente.setNome(clienteAlterado.getNome());
@@ -48,6 +48,14 @@ public class ClienteService {
       repository.save(cliente);
   }
 
+    @Transactional
+    public void delete(Long id) {
+
+       Cliente cliente = repository.findById(id).get();
+       cliente.setHabilitado(Boolean.FALSE);//exclusão lógica - move o objeto para false tirando-o da consulta
+
+       repository.save(cliente);// repository.delete faria a remoção fisica
+   }
 
     
 }
