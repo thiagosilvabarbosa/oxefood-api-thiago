@@ -19,6 +19,7 @@ import br.com.ifpe.oxefood.modelo.produto.CategoriaProduto;
 import br.com.ifpe.oxefood.modelo.produto.CategoriaProdutoService;
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.modelo.produto.ProdutoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -33,7 +34,7 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @PostMapping
-    public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request){
+    public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request){
         
         Produto produtoNovo = request.build();
         CategoriaProduto cp =  categoriaProdutoService.obterPorID(request.getIdCategoria());
@@ -53,7 +54,7 @@ public class ProdutoController {
         return produtoService.obterPorID(id);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request) {
+    public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody @Valid ProdutoRequest request) {
         
         Produto produto = request.build();
         produto.setCategoria(categoriaProdutoService.obterPorID(request.getIdCategoria()));

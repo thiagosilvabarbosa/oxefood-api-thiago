@@ -2,11 +2,16 @@ package br.com.ifpe.oxefood.modelo.cliente;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLRestriction;
 
+import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,13 +31,19 @@ import lombok.Setter;
 
 public class Cliente extends EntidadeAuditavel {
 
-    @Column
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Usuario usuario;
+
+
+    @Column (nullable = false, length = 100)
+    @Fetch(FetchMode.SUBSELECT)
     private String nome;
  
     @Column
     private LocalDate dataNascimento;
  
-    @Column
+    @Column (unique = true)
     private String cpf;
  
     @Column
